@@ -38,7 +38,7 @@ html,body{
     font-size:22px;
     white-space:nowrap;
     padding-left:100%;
-    animation:scroll 85s linear infinite;
+    animation:scroll 100s linear infinite;
 }
 
 @keyframes scroll{
