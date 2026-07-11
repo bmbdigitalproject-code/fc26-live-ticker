@@ -1,22 +1,31 @@
-const sponsor = "🎮 JOYSTICK BY REXUS • Official Gaming Gear Indonesia • Main Lebih Presisi, Main Lebih Nyaman";
+const RSS =
+"https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=olahraga&hl=id&gl=ID&ceid=ID:id";
 
-const berita = [
-"⚽ Timnas Indonesia terus mempersiapkan diri menghadapi agenda internasional.",
-"🏸 Indonesia menargetkan gelar juara di turnamen bulu tangkis dunia.",
-"🏍 Persaingan MotoGP semakin ketat memasuki seri berikutnya.",
-"🏀 NBA memasuki persiapan musim baru.",
-"⚽ Bursa transfer pemain Eropa masih menjadi sorotan.",
-"🏆 Liga 1 Indonesia menghadirkan persaingan yang semakin sengit."
-];
+const sponsor =
+"🎮 JOYSTICK BY REXUS • Official Gaming Gear Indonesia • Main Lebih Presisi, Main Lebih Nyaman";
 
-let hasil = "";
+async function loadNews(){
 
-berita.forEach((item, index) => {
-    hasil += item + " • ";
+    const res = await fetch(RSS);
 
-    if ((index + 1) % 3 === 0) {
-        hasil += sponsor + " • ";
-    }
-});
+    const data = await res.json();
 
-document.getElementById("marquee").innerHTML = hasil.repeat(5);
+    let hasil="";
+
+    data.items.forEach((item,i)=>{
+
+        hasil += " 📰 " + item.title + " • ";
+
+        if((i+1)%8===0){
+            hasil += sponsor + " • ";
+        }
+
+    });
+
+    document.getElementById("marquee").innerHTML=hasil;
+
+}
+
+loadNews();
+
+setInterval(loadNews,600000);
