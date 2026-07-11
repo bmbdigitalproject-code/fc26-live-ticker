@@ -1,7 +1,6 @@
 async function loadNews() {
 
     const res = await fetch("https://fc26-worker.fc26ticker.workers.dev");
-
     const berita = await res.json();
 
     const sponsor =
