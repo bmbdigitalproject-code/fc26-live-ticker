@@ -1,0 +1,51 @@
+html,body{
+    margin:0;
+    padding:0;
+    background:transparent;
+    overflow:hidden;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.ticker{
+    width:100%;
+    height:60px;
+    display:flex;
+    background:rgba(15,15,15,.92);
+    border-top:2px solid #e60000;
+}
+
+.breaking{
+    width:240px;
+    background:#e60000;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+.news{
+    flex:1;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+}
+
+#marquee{
+    color:#fff;
+    font-size:22px;
+    white-space:nowrap;
+    padding-left:100%;
+    animation:scroll 45s linear infinite;
+}
+
+@keyframes scroll{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-100%);
+    }
+}
