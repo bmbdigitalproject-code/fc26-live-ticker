@@ -1,31 +1,42 @@
-const RSS =
-"https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=olahraga&hl=id&gl=ID&ceid=ID:id";
+async function loadNews() {
 
-const sponsor =
-"🎮 JOYSTICK BY REXUS • Official Gaming Gear Indonesia • Main Lebih Presisi, Main Lebih Nyaman";
+    const res = await fetch("https://fc26-worker.fc26ticker.workers.dev");
 
-async function loadNews(){
+    const berita = await res.json();
 
-    const res = await fetch(RSS);
+    const sponsor =
+    "🎮 JOYSTICK BY REXUS • Official Gaming Gear Indonesia • Main Lebih Presisi • Main Lebih Nyaman";
 
-    const data = await res.json();
+    let text = "";
 
-    let hasil="";
+    berita.forEach((item,index)=>{
 
-    data.items.forEach((item,i)=>{
+        // Hilangkan judul feed "Google Berita"
+        if(item.title === "Google Berita") return;
 
-        hasil += " 📰 " + item.title + " • ";
+        text += "⚽ " + item.title + " • ";
 
-        if((i+1)%8===0){
-            hasil += sponsor + " • ";
+        // Sisipkan sponsor setiap 5 berita
+        if((index+1)%5===0){
+            text += sponsor + " • ";
         }
 
     });
 
-    document.getElementById("marquee").innerHTML=hasil;
+    const marquee = document.getElementById("marquee");
+
+    marquee.innerHTML = text;
+
+    // ===== AUTO SPEED =====
+    const totalWidth = marquee.scrollWidth + window.innerWidth;
+    const speed = 80;
+    const duration = totalWidth / speed;
+
+    marquee.style.animation = `ticker ${duration}s linear infinite`;
 
 }
 
 loadNews();
 
-setInterval(loadNews,600000);
+// Update berita setiap 5 menit
+setInterval(loadNews,300000);
