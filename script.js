@@ -1,41 +1,28 @@
 async function loadNews() {
 
-    const res = await fetch("https://fc26-worker.fc26ticker.workers.dev");
-    const berita = await res.json();
+    try {
 
-    const sponsor =
-    "🎮 JOYSTICK BY REXUS • Official Gaming Gear Indonesia • Main Lebih Presisi • Main Lebih Nyaman";
+        const res = await fetch("https://fc26-worker.fc26ticker.workers.dev");
 
-    let text = "";
+        console.log("STATUS:", res.status);
 
-    berita.forEach((item,index)=>{
+        const berita = await res.json();
 
-        // Hilangkan judul feed "Google Berita"
-        if(item.title === "Google Berita") return;
+        console.log("DATA:", berita);
 
-        text += "⚽ " + item.title + " • ";
+        const marquee = document.getElementById("marquee");
 
-        // Sisipkan sponsor setiap 5 berita
-        if((index+1)%5===0){
-            text += sponsor + " • ";
-        }
+        marquee.innerHTML = berita.map(x => "⚽ " + x.title).join(" • ");
 
-    });
+    } catch(err){
 
-    const marquee = document.getElementById("marquee");
+        console.error(err);
 
-    marquee.innerHTML = text;
+        document.getElementById("marquee").innerHTML =
+        "ERROR : " + err.message;
 
-    // ===== AUTO SPEED =====
-    const totalWidth = marquee.scrollWidth + window.innerWidth;
-    const speed = 80;
-    const duration = totalWidth / speed;
-
-    marquee.style.animation = `ticker ${duration}s linear infinite`;
+    }
 
 }
 
 loadNews();
-
-// Update berita setiap 5 menit
-setInterval(loadNews,300000);
