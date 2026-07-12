@@ -6,21 +6,29 @@ async function loadNews() {
     const sponsor =
     "🎮 JOYSTICK BY REXUS • Official Gaming Gear Indonesia • Main Lebih Presisi • Main Lebih Nyaman •";
 
+    const follow =
+    "❤️ FOLLOW • Road To 1.000.000 Followers • Terima Kasih Sudah Support ❤️ •";
+
     let text = "";
 
     berita.forEach((item,index)=>{
 
         text += "⚽ " + item.title + " • ";
 
-        // Sponsor setiap 5 berita
+        // Setiap 5 berita tampil sponsor
         if((index+1)%5===0){
             text += sponsor;
         }
 
+        // Setiap 10 berita tampil ajakan follow
+        if((index+1)%10===0){
+            text += follow;
+        }
+
     });
 
-    // Tambahkan sponsor lagi di akhir supaya tidak hilang
-    text += sponsor + sponsor;
+    // Tambahkan penutup supaya tidak pernah kosong
+    text += sponsor + follow;
 
     const marquee = document.getElementById("marquee");
 
@@ -38,5 +46,5 @@ async function loadNews() {
 
 loadNews();
 
-// Refresh setiap 5 menit
+// Refresh berita setiap 5 menit
 setInterval(loadNews,300000);
